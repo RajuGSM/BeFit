@@ -10,12 +10,11 @@ const Navbar = () => {
     height: 0,
     weight: 0,
     age: 0,
-    caloriesToBeBurned: 0,
+    // caloriesToBeBurned: 0,
   });
   const [modifiedData, setModifiedData] = useState({ ...userData });
 
   useEffect(() => {
-    // Fetch user data and goal data when the component mounts
     const fetchUserData = async () => {
       const token = localStorage.getItem("authToken");
 
@@ -26,16 +25,19 @@ const Navbar = () => {
           headers: { Authorization: token },
         });
 
-        const goalResponse = await axios.get("http://localhost:3002/getUserGoal", {
-          headers: { Authorization: token },
-        });
+        // const goalResponse = await axios.get("http://localhost:3002/getUserGoal", {
+        //   headers: { Authorization: token },
+        // });
+
+      console.log("User Data:", userResponse);
+      // console.log("Goal Data:", goalResponse);
 
         setUserData({
           username: userResponse.data.userName,
           height: userResponse.data.height,
           weight: userResponse.data.weight,
           age: userResponse.data.age,
-          caloriesToBeBurned: goalResponse.data.caloriesToBeBurned,
+          // caloriesToBeBurned: goalResponse.caloriesToBeBurned,
         });
 
         setModifiedData({
@@ -43,7 +45,7 @@ const Navbar = () => {
           height: userResponse.data.height,
           weight: userResponse.data.weight,
           age: userResponse.data.age,
-          caloriesToBeBurned: goalResponse.data.caloriesToBeBurned,
+          // caloriesToBeBurned: goalResponse.data.caloriesToBeBurned,
         });
       } catch (error) {
         console.error("Error fetching user data or goal data:", error);
@@ -55,6 +57,9 @@ const Navbar = () => {
 
   const handlePopupToggle = () => {
     setIsPopupOpen(!isPopupOpen);
+
+    // Toggle page scrolling
+    document.body.style.overflow = isPopupOpen ? "auto" : "hidden";
   };
 
   const handleInputChange = (e) => {
@@ -71,18 +76,13 @@ const Navbar = () => {
     if (!token) return;
 
     try {
-      // Send PATCH request to update user data
-      await axios.patch(
-        "http://localhost:3002/updateUserData",
-        modifiedData,
-        {
-          headers: {
-            Authorization: token,
-          },
-        }
-      );
+      await axios.patch("http://localhost:3002/updateUserData", modifiedData, {
+        headers: {
+          Authorization: token,
+        },
+      });
       alert("User data updated successfully!");
-      setIsPopupOpen(false);
+      handlePopupToggle();
     } catch (error) {
       console.error("Error updating user data:", error);
       alert("Failed to update user data.");
@@ -92,10 +92,7 @@ const Navbar = () => {
   return (
     <nav className="bg-blue-600 p-4">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
-        {/* Logo or App Name */}
         <h1 className="text-white text-2xl font-semibold">BeFit</h1>
-        
-        {/* Navigation Links */}
         <div className="space-x-6">
           <Link to="/dashboard" className="text-white hover:text-gray-200">
             Dashboard
@@ -107,18 +104,14 @@ const Navbar = () => {
             Log Workouts
           </Link>
           <Link
-  to="/signin"
-  className="text-white hover:text-gray-200"
-  onClick={() => {
-    localStorage.removeItem("authToken");
-  }}
->
-  Log Out
-</Link>
-
+            to="/signin"
+            className="text-white hover:text-gray-200"
+            onClick={() => localStorage.removeItem("authToken")}
+          >
+            Log Out
+          </Link>
         </div>
 
-        {/* Profile Icon */}
         <FaUserCircle
           size={30}
           className="text-white cursor-pointer"
@@ -126,9 +119,11 @@ const Navbar = () => {
         />
       </div>
 
-      {/* Popup for user profile */}
       {isPopupOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+          style={{ animation: "fadeIn 0.3s" }}
+        >
           <div className="bg-white p-6 rounded-lg w-96">
             <h2 className="text-xl font-semibold mb-4">User Profile</h2>
             <form className="space-y-4">
@@ -173,7 +168,9 @@ const Navbar = () => {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700">Calories to be Burned</label>
+                <label className="block text-sm font-medium text-gray-700">
+                  Calories to be Burned
+                </label>
                 <input
                   type="number"
                   name="caloriesToBeBurned"

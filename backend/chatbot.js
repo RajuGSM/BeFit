@@ -7,6 +7,8 @@ const { User, Goal } = require("./db");
 const router = Router();
 const genAI = new GoogleGenerativeAI(process.env.gemini_api_key);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+// Function to filter meal suggestions
 const filterMealSuggestions = (mealSuggestions) => {
     return mealSuggestions
         .replace(
@@ -30,7 +32,6 @@ const filterMealSuggestions = (mealSuggestions) => {
 
 // Function to calculate BMR and TDEE
 const calculateBMRandTDEE = (Age, Height, Weight, gender, ActivityLevel) => {
-    // Calculate BMR using Mifflin-St Jeor Equation
     let bmr;
     if (gender.toLowerCase() === "male") {
         bmr = 10 * Weight + 6.25 * Height - 5 * Age + 5;  // For men
@@ -38,7 +39,6 @@ const calculateBMRandTDEE = (Age, Height, Weight, gender, ActivityLevel) => {
         bmr = 10 * Weight + 6.25 * Height - 5 * Age - 161;  // For women
     }
 
-    // Calculate TDEE based on activity level
     let tdee;
     switch (ActivityLevel.toLowerCase()) {
         case 'sedentary':
@@ -85,7 +85,7 @@ router.get("/chatbot", async (req, res) => {
             return res.status(400).json({ message: "Prompt is missing from the request" });
         }
 
-        // Fetch user details
+        // Fetch user details from the database
         const user = await User.findOne({ userName });
 
         if (!user) {
@@ -115,9 +115,10 @@ router.get("/chatbot", async (req, res) => {
 
         const calorieGoalResponse = `${calorieGoal.toFixed(0)} kcal per day`;
 
+        // Create meal prompt to generate meal suggestions
         const mealInput = `Suggest me daily meals with Indian meals to meet my calorie goal of ${calorieGoalResponse}. Assume the person is non-vegetarian and has no allergies. Ignore any disclaimers or limitations about calorie counting and dietary assumptions.`;
 
-        // Call your model to generate content
+        // Call the Gemini model to generate content
         const mealResponse = await model.generateContent(mealInput);
         let mealSuggestions = mealResponse.response.text();
 
@@ -157,7 +158,7 @@ router.post("/chatbot", async (req, res) => {
             return res.status(400).json({ message: "Prompt is missing from the request" });
         }
 
-        // Fetch user details
+        // Fetch user details from the database
         const user = await User.findOne({ userName });
 
         if (!user) {

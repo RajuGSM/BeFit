@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import Chatbot from "./chatbot";  // Import the Chatbot component
+import DietChatbot from "./chatbot";  // Import the Chatbot component
 
 const Dashboard = () => {
     const token = localStorage.getItem("authToken");
@@ -158,55 +158,58 @@ const Dashboard = () => {
                         <p>Loading Goal...</p>
                     )}
                 </div>
+            </div>
 
-                {/* Meals and Workouts */}
-                <div className="bg-white p-6 rounded-lg shadow-md col-span-1 sm:col-span-2 lg:col-span-3">
-                    <h3 className="text-xl font-semibold mb-4">Logs for {date}</h3>
-                    <input
-                        type="date"
-                        value={date}
-                        onChange={handleDateChange}
-                        className="mb-4 p-2 border rounded"
-                    />
+            {/* Logs for the selected date */}
+            <div className="mt-6">
+                <h3 className="text-xl font-semibold mb-4">Logs for {date}</h3>
+                <input
+                    type="date"
+                    value={date}
+                    onChange={handleDateChange}
+                    className="mb-4 p-2 border rounded"
+                />
 
-                    <div className="flex flex-col lg:flex-row gap-6">
-                        <div className="w-full lg:w-1/2">
-                            <h4 className="text-lg font-medium mb-2">🥗 Meals</h4>
-                            {meals.length > 0 ? (
-                                meals.map((meal, index) => (
-                                    <div key={index} className="border-b pb-2 mb-2">
-                                        <p>
-                                            {meal.mealType}: {meal.mealName} -{" "}
-                                            <strong>{meal.totalCal} kcal</strong>
-                                        </p>
-                                    </div>
-                                ))
-                            ) : (
-                                <p>No meals logged for this date.</p>
-                            )}
-                        </div>
+                {/* Meals and Workouts - Separate Cards with Margin */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4"> {/* Added mt-4 for more spacing */}
+                    {/* Meals Card */}
+                    <div className="bg-white p-6 rounded-lg shadow-md">
+                        <h4 className="text-lg font-medium mb-2">🥗 Meals</h4>
+                        {meals.length > 0 ? (
+                            meals.map((meal, index) => (
+                                <div key={index} className="border-b pb-2 mb-2">
+                                    <p>
+                                        {meal.mealType}: {meal.mealName} -{" "}
+                                        <strong>{meal.totalCal} kcal</strong>
+                                    </p>
+                                </div>
+                            ))
+                        ) : (
+                            <p>No meals logged for this date.</p>
+                        )}
+                    </div>
 
-                        <div className="w-full lg:w-1/2">
-                            <h4 className="text-lg font-medium mb-2">🏋️ Workouts</h4>
-                            {workouts.length > 0 ? (
-                                workouts.map((workout, index) => (
-                                    <div key={index} className="border-b pb-2 mb-2">
-                                        <p>
-                                            {workout.workoutName} -{" "}
-                                            <strong>{workout.caloriesBurned} kcal</strong>
-                                        </p>
-                                    </div>
-                                ))
-                            ) : (
-                                <p>No workouts logged for this date.</p>
-                            )}
-                        </div>
+                    {/* Workouts Card */}
+                    <div className="bg-white p-6 rounded-lg shadow-md">
+                        <h4 className="text-lg font-medium mb-2">🏋️ Workouts</h4>
+                        {workouts.length > 0 ? (
+                            workouts.map((workout, index) => (
+                                <div key={index} className="border-b pb-2 mb-2">
+                                    <p>
+                                        {workout.workoutName} -{" "}
+                                        <strong>{workout.caloriesBurned} kcal</strong>
+                                    </p>
+                                </div>
+                            ))
+                        ) : (
+                            <p>No workouts logged for this date.</p>
+                        )}
                     </div>
                 </div>
             </div>
 
             {/* Add Chatbot at the bottom */}
-            <Chatbot token={token} />
+            <DietChatbot token={token} />
         </div>
     );
 };

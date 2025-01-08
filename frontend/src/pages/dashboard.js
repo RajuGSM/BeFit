@@ -13,7 +13,7 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchGoal = async () => {
             try {
-                const response = await axios.get("http://localhost:3002/getgoal", {
+                const response = await axios.get("https://befit-backend-pll5.onrender.com/getgoal", {
                     headers: { Authorization: token },
                 });
                 if (response.data) {
@@ -31,7 +31,7 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchMeals = async () => {
             try {
-                const response = await axios.get("http://localhost:3002/getfood", {
+                const response = await axios.get("https://befit-backend-pll5.onrender.com/getfood", {
                     headers: { Authorization: token },
                     params: { date },
                 });
@@ -64,7 +64,7 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchWorkouts = async () => {
             try {
-                const response = await axios.get("http://localhost:3002/getworkouts", {
+                const response = await axios.get("https://befit-backend-pll5.onrender.com/getworkouts", {
                     headers: { Authorization: token },
                     params: { date },
                 });

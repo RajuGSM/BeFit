@@ -4,7 +4,7 @@ const authRoutes = require("./route");
 const chatbot=require("./chatbot")
 const app = express();
 const cors = require('cors');
-const port = 3002;
+const port = process.env.PORT||3002;
 app.use(express.json());
 app.use(cors());
 app.use(authRoutes); 

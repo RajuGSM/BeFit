@@ -27,7 +27,7 @@ const DietChatbot = ({ token }) => {
         chatInput.toLowerCase().includes("gain")
       ) {
         // Call the backend to calculate the calories needed for the goal
-        const response = await axios.get("http://localhost:3002/calculate-calories", {
+        const response = await axios.get("https://befit-backend-pll5.onrender.com/calculate-calories", {
           headers: { Authorization: token },
           params: { prompt: chatInput },
         });
@@ -48,7 +48,7 @@ const DietChatbot = ({ token }) => {
         ]);
       } else {
         // Handle other general questions
-        const generalResponse = await axios.get("http://localhost:3002/chatbot", {
+        const generalResponse = await axios.get("https://befit-backend-pll5.onrender.com/chatbot", {
           headers: { Authorization: token },
           params: { prompt: chatInput },
         });
@@ -95,7 +95,7 @@ const DietChatbot = ({ token }) => {
       const goal = goalType === "gain" ? "Gain Weight" : "Lose Weight";
 
       const response = await axios.post(
-        "http://localhost:3002/chatbot/goal",
+        "https://befit-backend-pll5.onrender.com/chatbot/goal",
         { goal, caloriesToBeTaken },
         { headers: { Authorization: token } }
       );

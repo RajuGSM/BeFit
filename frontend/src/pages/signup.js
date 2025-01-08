@@ -30,7 +30,7 @@ const Signup = () => {
     setError('');
 
     try {
-      const response = await axios.post('http://localhost:3002/signup', formData);
+      const response = await axios.post('https://befit-backend-pll5.onrender.com/signup', formData);
       if (response.status === 200) {
         alert('Signup successful. Please log in.');
         navigate('/signin'); // Redirect to login page after successful signup

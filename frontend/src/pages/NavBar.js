@@ -21,7 +21,7 @@ const Navbar = () => {
       if (!token) return;
 
       try {
-        const userResponse = await axios.get("http://localhost:3002/getUserData", {
+        const userResponse = await axios.get("https://befit-backend-pll5.onrender.com/getUserData", {
           headers: { Authorization: token },
         });
 
@@ -76,7 +76,7 @@ const Navbar = () => {
     if (!token) return;
 
     try {
-      await axios.patch("http://localhost:3002/updateUserData", modifiedData, {
+      await axios.patch("https://befit-backend-pll5.onrender.com/updateUserData", modifiedData, {
         headers: {
           Authorization: token,
         },

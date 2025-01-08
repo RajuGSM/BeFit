@@ -28,7 +28,7 @@ const LogFood = () => {
       }
 
       const response = await axios.post(
-        "http://localhost:3002/logfood",
+        "https://befit-backend-pll5.onrender.com/logfood",
         {
           mealType,
           mealName,

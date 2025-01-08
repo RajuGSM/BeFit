@@ -14,7 +14,7 @@ const Login = () => {
     setError('');
 
     try {
-      const response = await axios.post('http://localhost:3002/signin', { userName, password });
+      const response = await axios.post('https://befit-backend-pll5.onrender.com/signin', { userName, password });
       if (response.status === 200) {
         const token=response.data.token
         localStorage.setItem('authToken',token)

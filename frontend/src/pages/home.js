@@ -1,5 +1,8 @@
 import React from 'react';
-import pic from "../assets/home.jpg"; // Example hero image
+import pic from "../assets/home.jpg";
+import bot from "../assets/bot.jpg";
+import meal from "../assets/meal.jpg";
+import obj from "../assets/obj.jpg";
 
 function Home() {
   return (
@@ -34,7 +37,7 @@ function Home() {
         <div className="max-w-6xl mx-auto px-6 py-12 space-y-12">
           {/* Hero Slice */}
           <div className="flex flex-col md:flex-row items-center gap-8">
-            <img src={pic} alt="Track Progress" className="w-full md:w-1/2 rounded-lg shadow-lg" />
+            <img src={meal} alt="Track Progress" className="w-full md:w-1/3 rounded-lg shadow-lg" />
             <div>
               <h2 className="text-3xl font-bold mb-4">Effortless Meal Logging</h2>
               <p className="text-gray-600">
@@ -51,12 +54,12 @@ function Home() {
                 Whether you're aiming to lose weight, improve endurance, or maintain a balanced lifestyle, our tools are designed to support your unique needs.
               </p>
             </div>
-            <img src={pic} alt="Tools for Goals" className="w-full md:w-1/2 rounded-lg shadow-lg" />
+            <img src={obj} alt="Tools for Goals" className="w-full md:w-1/3 rounded-lg shadow-lg" />
           </div>
 
           {/* Journal Slice */}
           <div className="flex flex-col md:flex-row items-center gap-8">
-            <img src={pic} alt="Meal Diary" className="w-full md:w-1/2 rounded-lg shadow-lg" />
+            <img src={pic} alt="Meal Diary" className="w-full md:w-1/3 rounded-lg shadow-lg" />
             <div>
               <h2 className="text-3xl font-bold mb-4">Track Your Journey</h2>
               <p className="text-gray-600">
@@ -76,7 +79,7 @@ function Home() {
                 Learn More
               </button>
             </div>
-            <img src={pic} alt="Diet Bot" className="w-full md:w-1/2 rounded-lg shadow-lg" />
+            <img src={bot} alt="Diet Bot" className="w-full md:w-1/3 rounded-lg shadow-lg" />
           </div>
         </div>
       </div>

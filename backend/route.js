@@ -248,11 +248,14 @@ router.get("/getgoal", async (req, res) => {
 router.get("/getUserData", async (req, res) => {
     try {
         const user = await fetchUserFromToken(req.headers.authorization);
+        const goal = await Goal.findOne({ userName: user.userName });
         const userData = {
             userName: user.userName,
             height: user.Height,
             weight: user.Weight,
             age: user.Age,
+            // caloriesToBeBurned: goal.caloriesToBeBurned
+            
         };
         res.status(200).json(userData);
     } catch (error) {

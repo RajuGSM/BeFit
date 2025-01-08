@@ -23,7 +23,7 @@ const Workouts = () => {
 
     try {
       await axios.post(
-        "http://localhost:3002/logWorkout", // Replace with your actual endpoint
+        "https://befit-backend-pll5.onrender.com/logWorkout", // Replace with your actual endpoint
         {
           workoutName,
           caloriesBurned,

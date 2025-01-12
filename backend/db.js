@@ -1,6 +1,6 @@
 const mongoose=require('mongoose')
 const { string } = require('zod')
-mongoose.connect("mongodb+srv://rajugsm2003:asdfghjklqwertyuiop@cluster0.pulxw.mongodb.net/fit_track?retryWrites=true&w=majority&appName=Cluster0")
+mongoose.connect("YOUR_URL")
 
 const UserSchema=new mongoose.Schema({
     userName:String,
